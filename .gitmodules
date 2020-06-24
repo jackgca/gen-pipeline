@@ -1,6 +1,0 @@
-[submodule "plot-scripts"]
-	path = plot-scripts
-	url = https://github.com/jackgca/plot-scripts
-[submodule "gen"]
-	path = gen
-	url = https://github.com/jackgca/gen
