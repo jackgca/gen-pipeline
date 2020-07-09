@@ -1,10 +1,18 @@
 #!/bin/bash
 
-for file in /mnt/d/rpi/svg/*.svg; do
+svgbucket=`cat svgbucket`
+gcode=`cat gcode`
+
+echo $svgbucket
+
+for file in "$svgbucket"/*.svg; do
 	nopath=$(basename "$file")
 	filename="${nopath%.*}"
-	mv "$file" /home/jack/svg/"$nopath"
-	juicy-gcode /home/jack/svg/"$nopath" -d 96 -f /home/jack/plots/juicy.conf -o /home/jack/gcode/"$filename".gcode
+ 
+
+	vpype read "$file" scale -p -o 0 0 --to 200mm 287mm linesort write --page-format letter --landscape --center "$file"
+	mv "$file" "$svgbucket"/processed/"$nopath"
+	juicy-gcode "$svgbucket"/processed/"$nopath" -d 96 -f juicy.conf -o "$gcode"/"$filename".gcode
 done
 
 echo "done"
